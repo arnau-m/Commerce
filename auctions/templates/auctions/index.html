@@ -1,0 +1,19 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+  {% if user.is_authenticated %}
+    <h2>{{ header }}</h2>
+
+      {% for listing in listings %}
+      <img src="{{listing.image}}" alt="List Image" height="80px" style="float: left; margin: 2px 15px; ">
+              <a href="/listing/{{listing.title}}">Title: <strong>{{listing.title}}</strong></a><br>
+              Category: <strong>{{listing.category}}</strong><br>
+              Price: <strong>${{listing.price}}</strong>
+              <hr>
+      {% endfor %}
+
+  {% else %}
+    <h3>Please, <a href="{% url 'login' %}">Log In</a></h3>
+  {% endif %}
+{% endblock %}

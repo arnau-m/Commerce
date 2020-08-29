@@ -1,0 +1,16 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+  {% if user.is_authenticated %}
+    <h2>Categories</h2>
+    {% for category in categories %}
+      <a href="/viewCategory/{{category}}">{{category}}</a>
+      <hr>
+    {% endfor %}
+
+  {% else %}
+    <h3>Please, <a href="{% url 'login' %}">Log In</a></h3>
+
+  {% endif %}
+{% endblock %}
