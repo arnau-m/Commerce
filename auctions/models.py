@@ -19,7 +19,7 @@ class Listings(models.Model):
         return f"{self.title}"
 
 class Bids(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    username = models.CharField(max_length = 64, null= True)
     listing = models.ForeignKey(Listings, on_delete=models.CASCADE)
     bid = models.IntegerField(default= 0)
 
@@ -27,15 +27,15 @@ class Bids(models.Model):
         return f"{self.user} bids for {self.listing}"
 
 class Comments(models.Model):
-    user = models.CharField(max_length=64, null= True)
+    username = models.CharField(max_length=64, null= True)
     listing = models.ForeignKey(Listings, on_delete=models.CASCADE, null= True)
     comment = models.TextField(max_length=200, null= True)
 
     def __str__(self):
         return f"({self.user} commented on {self.listing})"
 
-class Whatchlist(models.Model):
-    user = models.CharField(max_length=64)
+class Watchlist(models.Model):
+    username = models.CharField(max_length=64)
     listing = models.ForeignKey(Listings, on_delete = models.CASCADE,related_name = "listing")
 
 

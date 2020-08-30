@@ -1,8 +1,6 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-
-  {% if user.is_authenticated %}
     <h2>{{ header }}</h2>
 
       {% for listing in listings %}
@@ -10,10 +8,15 @@
               <a href="/listing/{{listing.title}}"><strong>{{listing.title}}</strong></a><br>
               Category: <strong>{{listing.category}}</strong><br>
               Price: <strong>${{listing.price}}</strong>
+              <form class="" action="/deletewatchlist/{{listing.title}}" method="post" style="float: right ">
+                {% csrf_token %}
+                  <button class="btn btn-primary" type="submit" name="Delete" style="background-color: red;">Delete From Watchlist</button>
+              </form>
+
               <hr>
       {% endfor %}
+      {% if not listings %}
+        <p>Watchlist is empty.</p>
+      {% endif %}
 
-  {% else %}
-    <h3>Please, <a href="{% url 'login' %}">Log In</a></h3>
-  {% endif %}
 {% endblock %}
