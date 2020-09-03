@@ -11,12 +11,12 @@ from .models import User, Listings, Bids, Comments, Watchlist
 def index(request):
     header = "Active Listings"
     listings = Listings.objects.filter(status = True)
-    return render(request, "auctions/index.html",{"listings":listings,"check": True})
+    return render(request, "auctions/index.html",{"listings":listings,"check": True, "header":"Active Listings"})
 
 
 def closed(request):
     listing = Listings.objects.filter(status = False)
-    return render(request, "auctions/index.html" ,{"listings":listing, "check": False})
+    return render(request, "auctions/index.html" ,{"listings":listing, "check": False, "header":"Closed Listings"})
 
 def login_view(request):
     if request.method == "POST":
@@ -157,3 +157,24 @@ def close(request,title):
     list.winner = bider.username
     list.save()
     return render(request,"auctions/message.html",{"message": "Listing Has Been closed!"})
+
+def createListing(request):
+    if request.method == "GET":
+        return render(request, "auctions/createListing.html")
+
+    title = request.POST.get("title")
+    alldata = Listings.objects.all()
+    message = "This Listing is Allreay in Use."
+    for data in alldata:
+        if data.title == title:
+            return render(request, "auctions/message.html", {"message":message})
+    price = int(request.POST.get("price"))
+    description = request.POST.get("description")
+    image = request.POST.get("image")
+    category = request.POST.get("category")
+    username = request.user.username
+    #add information to db
+    add = Listings(title=title, price=price, description=description, image=image, category=category, owner=username, status=True)
+    add.save()
+    list = Listings.objects.get(title=title)
+    return render(request, "auctions/listing.html", {"listing":list})

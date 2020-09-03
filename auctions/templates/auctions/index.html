@@ -12,6 +12,9 @@
               Price: <strong>${{listing.price}}</strong>
               <hr>
       {% endfor %}
+      {% if not listings %}
+        <p>No Listings.</p>
+      {% endif %}
 
   {% else %}
     <h3>Please, <a href="{% url 'login' %}">Log In</a></h3>

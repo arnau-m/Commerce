@@ -24,7 +24,7 @@ class Bids(models.Model):
     bid = models.IntegerField(default= 0)
 
     def __str__(self):
-        return f"{self.user} bids for {self.listing}"
+        return f"{self.username} bids for {self.listing}"
 
 class Comments(models.Model):
     username = models.CharField(max_length=64, null= True)
@@ -32,7 +32,7 @@ class Comments(models.Model):
     comment = models.TextField(max_length=200, null= True)
 
     def __str__(self):
-        return f"({self.user} commented on {self.listing})"
+        return f"({self.username} commented on {self.listing})"
 
 class Watchlist(models.Model):
     username = models.CharField(max_length=64)
